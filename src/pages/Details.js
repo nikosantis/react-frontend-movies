@@ -1,17 +1,23 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 const API_KEY = '8e7fa93f'
 
 export class Details extends Component {
   static propTypes = {
-    id: PropTypes.string
+    match: PropTypes.shape({
+      params: PropTypes.object,
+      isExact: PropTypes.bool,
+      path: PropTypes.string,
+      url: PropTypes.string
+    })
   }
 
   state = { movie: {} }
 
-  _fetchMovie = ({ id }) => {
-    fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&i=${id}`)
+  _fetchMovie = ({ movieId }) => {
+    fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&i=${movieId}`)
       .then(res => res.json())
       .then(movie => {
         console.log({movie})
@@ -19,13 +25,10 @@ export class Details extends Component {
       })
   }
 
-  _goBack () {
-    window.history.back()
-  }
-
   componentDidMount () {
-    const { id } = this.props
-    this._fetchMovie({ id })
+    console.log(this.props)
+    const { movieId } = this.props.match.params
+    this._fetchMovie({ movieId })
   }
 
   render () {
@@ -39,7 +42,7 @@ export class Details extends Component {
 
     return (
       <div>
-        <button onClick={this._goBack}>Volver</button>
+        <Link className='button' to='/'>Volver</Link>
         <h1>{Title}</h1>
         <img src={Poster} alt={Title} />
         <h3>{Actors}</h3>
