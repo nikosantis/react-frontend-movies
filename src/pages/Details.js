@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import { ButtonBackToHome } from '../components/ButtonBackToHome'
 
 const API_KEY = '8e7fa93f'
 
@@ -42,7 +42,7 @@ export class Details extends Component {
 
     return (
       <div>
-        <Link className='button' to='/'>Volver</Link>
+        <ButtonBackToHome />
         <h1>{Title}</h1>
         <img src={Poster} alt={Title} />
         <h3>{Actors}</h3>
